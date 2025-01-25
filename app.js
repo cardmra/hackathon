@@ -1,3 +1,36 @@
+// Configurazione di Amplify
+aws_amplify.Auth.configure({
+    region: 'us-east-1',
+    userPoolId: 'us-east-1_kL8N2y7F3',
+    userPoolWebClientId: '5069s2b9cq7v831uumml4lg4sh'
+});
+
+function signIn() {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    aws_amplify.Auth.signIn(email, password)
+        .then(user => {
+            console.log(user);
+            document.getElementById('auth').style.display = 'none';
+            document.getElementById('home').style.display = 'block';
+        })
+        .catch(err => {
+            console.error(err);
+            alert('Failed to login');
+        });
+}
+
+function signOut() {
+    aws_amplify.Auth.signOut()
+        .then(data => {
+            console.log(data);
+            document.getElementById('auth').style.display = 'block';
+            document.getElementById('home').style.display = 'none';
+        })
+        .catch(err => console.error(err));
+}
+
 function uploadFiles() {
     const specFile = document.getElementById('specFile').files[0];
     const outputFile = document.getElementById('outputFile').files[0];
@@ -11,7 +44,7 @@ function uploadFiles() {
     formData.append('spec', specFile);
     formData.append('output', outputFile);
 
-    fetch('YOUR_API_GATEWAY_URL', {
+    fetch('https://cardmra.github.io/hackathon/', {
         method: 'POST',
         body: formData
     })
