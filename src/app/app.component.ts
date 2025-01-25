@@ -1,18 +1,23 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { TodosComponent } from './todos/todos.component';
-import { Amplify } from 'aws-amplify';
-import outputs from '../../amplify_outputs.json';
-
-Amplify.configure(outputs);
+import { Component, OnInit } from '@angular/core';
+import Amplify from 'aws-amplify';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
-  imports: [RouterOutlet, TodosComponent],
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'amplify-angular-template';
+export class AppComponent implements OnInit {
+  title = 'my-cognito-app';
+
+  ngOnInit() {
+    Amplify.configure({
+      Auth: {
+        mandatorySignIn: true,
+        region: 'us-east-1',
+        userPoolId: 'us-east-1_kL8N2y7F3',
+        userPoolWebClientId: '5069s2b9cq7v831uumml4lg4sh',
+        authenticationFlowType: 'USER_PASSWORD_AUTH'
+      }
+    });
+  }
 }
