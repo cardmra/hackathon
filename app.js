@@ -1,15 +1,17 @@
 // Configurazione di Amplify
-aws_amplify.Auth.configure({
-    region: 'us-east-1',
-    userPoolId: 'us-east-1_kL8N2y7F3',
-    userPoolWebClientId: '5069s2b9cq7v831uumml4lg4sh'
+Amplify.configure({
+    Auth: {
+        region: 'us-east-1',
+        userPoolId: 'us-east-1_kL8N2y7F3',
+        userPoolWebClientId: '5069s2b9cq7v831uumml4lg4sh'
+    }
 });
 
 function signIn() {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
-    aws_amplify.Auth.signIn(email, password)
+    Auth.signIn(email, password)
         .then(user => {
             console.log(user);
             document.getElementById('auth').style.display = 'none';
@@ -22,7 +24,7 @@ function signIn() {
 }
 
 function signOut() {
-    aws_amplify.Auth.signOut()
+    Auth.signOut()
         .then(data => {
             console.log(data);
             document.getElementById('auth').style.display = 'block';
