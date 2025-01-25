@@ -20,4 +20,7 @@ export class AppComponent implements OnInit {
       }
     });
   }
+  signOut() {
+    Auth.signOut();
+  }
 }
